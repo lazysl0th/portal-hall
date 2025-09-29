@@ -1,6 +1,6 @@
 class Morty {
     constructor(name) {
-        this.name = name;
+        this.name = name || this.constructor.name;
     }
 
     hidePortalGun(boxes, box) {
