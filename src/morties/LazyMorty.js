@@ -1,4 +1,4 @@
-const Morty = require('../components/Morty');
+const { Morty } = require('../components/Morty');
 
 class LazyMorty extends Morty {
     constructor(name) {
