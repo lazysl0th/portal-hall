@@ -3,7 +3,7 @@ const { MortyLoader } = require('./components/MortyLoader');
 const ParamsValidator = require('./components/ParamsValidator');
 const { Core } = require('./components/Core');
 
-process.on("uncaughtException", (e) => {console.log(e);e.handler()});
+process.on("uncaughtException", (e) => {e.handler()});
 
 const paramsValidator = new ParamsValidator(validationSetting, process.argv.slice(2));
 const config = paramsValidator.validateParams();
