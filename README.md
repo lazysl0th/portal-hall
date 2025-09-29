@@ -48,7 +48,7 @@ node index.js
 # Usage: node cli.js <boxes> <path> [className]
 # Example: node cli.js 3 ./morties/ClassicMorty.js ClassicMorty
 
-node index.js 2 ./morties/ClassicMorty.js
+node index.js 1 ./morties/ClassicMorty.js
 # Error: Invalid box count: 1. The number of boxes must be an integer greater than 2.
 # Usage: node cli.js <boxes> <path> [className]
 # Example: node cli.js 3 ./morties/ClassicMorty.js ClassicMorty
