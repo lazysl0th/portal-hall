@@ -85,15 +85,6 @@ class Core {
                 gameConfig.phrases.fairNumber(index+1, step.mortyRandomNumber, step.rickRandomNumber, this._countBoxes - index, step.randomBox)
             );
         })
-/*
-        statistics.currentRound.secretInfoStep.forEach((step, index) => {
-            this._renderMessages(
-                this._morty.name,
-                gameConfig.phrases.randomNumber(index+1, step.mortyRandomNumber),
-                step.HMAC,
-                gameConfig.phrases.fairNumber(index+1, step.mortyRandomNumber, step.rickRandomNumber, this._countBoxes - index, step.randomBox)
-            );
-        })*/
         api.addInfoAboutRound(resultRound);
         this._renderMessages(
             this._morty.name,
