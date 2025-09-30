@@ -11,15 +11,15 @@ class Core {
         this._round = 0;
     }
 
-    async run() {
+    run() {
         do {
             this._init();
-            await this._start();
-            await this._chooseBox();
-            await this._deleteBox();
-            await this._changeBox();
+            this._start();
+            this._chooseBox();
+            this._deleteBox();
+            this._changeBox();
             this._finish();
-            await this._end()
+            this._end()
 
         }
         while (this._round > 0)
@@ -32,22 +32,22 @@ class Core {
         api.addStartRoundInfo(this._round);
     }
     
-    async _start() {
+    _start() {
         const mortyPartSecretInfo = api.getFirstPartSecretInfo(this._countBoxes);
         this._renderMessages(this._morty.name, `HMAC${mortyPartSecretInfo.id}=${mortyPartSecretInfo.HMAC}`, gameConfig.phrases.enterFirstNumber(this._countBoxes));
-        const rickRandomNumber = await api.getAnswer(gameConfig.userName, gameConfig.patternAnswer.chooseBox);
+        const rickRandomNumber = api.getAnswer(gameConfig.userName, gameConfig.patternAnswer.chooseBox);
         const secretInfo = api.getSecondPartSecretInfo(rickRandomNumber, mortyPartSecretInfo, this._countBoxes);
         api.addSecretInfo(secretInfo);
         this._morty.hidePortalGun(this._boxes, secretInfo.randomBox);
     }
 
-    async _chooseBox() {
+    _chooseBox() {
         this._renderMessages(this._morty.name, gameConfig.phrases.chooseBox(this._countBoxes));
-        const selectBox = await api.getAnswer(gameConfig.userName, gameConfig.patternAnswer.chooseBox);
+        const selectBox = api.getAnswer(gameConfig.userName, gameConfig.patternAnswer.chooseBox);
         this._selectBox(selectBox, this._boxes);
     }
 
-    async _deleteBox() {
+    _deleteBox() {
         const mortyPartSecretInfo = api.getFirstPartSecretInfo(this._boxes.filter(box => !box.isSelected).length);
         this._renderMessages(
             this._morty.name, 
@@ -55,13 +55,13 @@ class Core {
             `HMAC${mortyPartSecretInfo.id}=${mortyPartSecretInfo.HMAC}`,
             gameConfig.phrases.enterSecondNumber(this._boxes.filter(box => !box.isSelected).length)
         );
-        const rickRandomNumber = await api.getAnswer(gameConfig.userName, gameConfig.patternAnswer.switchBox);
+        const rickRandomNumber = api.getAnswer(gameConfig.userName, gameConfig.patternAnswer.switchBox);
         const secretInfo = api.getSecondPartSecretInfo(rickRandomNumber, mortyPartSecretInfo, this._boxes.filter(box => !box.isSelected).length);
         api.addSecretInfo(secretInfo);
         this._morty.openBox(this._boxes, secretInfo.randomBox);
     }
 
-    async _changeBox() {
+    _changeBox() {
         this._renderMessages(
             this._morty.name,
             gameConfig.phrases.keepBox(
@@ -70,7 +70,7 @@ class Core {
             ),
             gameConfig.phrases.switchBox()
         );
-        const switchBox = await api.getAnswer(gameConfig.userName, gameConfig.patternAnswer.switchBox);
+        const switchBox = api.getAnswer(gameConfig.userName, gameConfig.patternAnswer.switchBox);
         this._switchBox(switchBox, this._boxes);
         api.addSwitchedInfo(switchBox);
     }
@@ -94,9 +94,9 @@ class Core {
         )
     }
 
-    async _end() {
+    _end() {
         this._renderMessages(this._morty.name, gameConfig.phrases.oneMoreRound())
-        const answer = await api.getAnswer(gameConfig.userName, gameConfig.patternAnswer.continueGame);
+        const answer = api.getAnswer(gameConfig.userName, gameConfig.patternAnswer.continueGame);
         this._updateRound(answer);
         if (this._round == 0) {
             this._renderMessages(this._morty.name, gameConfig.phrases.end());

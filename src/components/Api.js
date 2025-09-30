@@ -1,5 +1,4 @@
-const readline = require('readline/promises');
-const { stdin: input, stdout: output } = require('process');
+const readlineSync = require('readline-sync');
 const { KeyManager } = require('./KeyManager');
 const { FairRandomGenerator } = require('./FairRandomGenerator');
 const { Statistics } = require('./Statistics');
@@ -43,19 +42,16 @@ class Api {
         return fairRandomGenerator.generateHMAC(secretKey,randomNumber).toUpperCase();
     }
 
-    async getAnswer(userNname, { patternName, pattern }) {
-        let answer;
-        while (!this._validateAnswer(answer, patternName, pattern)) {
-            answer = await this._requestAnswer(userNname);
-        }
+    getAnswer(userNname, { patternName, pattern }) {
+        let answer
+        do {
+            answer = this._requestAnswer(userNname);
+        } while (!this._validateAnswer(answer, patternName, pattern))
         return isNaN(answer) ? answer : Number(answer);
     }
 
-    async _requestAnswer(userNname) {
-        const rl = readline.createInterface({ input, output });
-        const answer = await rl.question(`${userNname}: `);
-        rl.close();
-        return answer;
+    _requestAnswer(userNname) {
+        return readlineSync.question(`${userNname}: `);
     }
 
     _validateAnswer(answer, patternName, pattern) {
