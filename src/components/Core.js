@@ -66,7 +66,7 @@ class Core {
             this._morty.name,
             gameConfig.phrases.keepBox(
                 (this._boxes.filter(box => box.isSelected == true)[0]).id,
-                (this._boxes.filter(box => box.isOpen == true)[0]).id
+                (this._boxes.filter(box => box.hasPortalGun == true)[0]).id
             ),
             gameConfig.phrases.switchBox()
         );
