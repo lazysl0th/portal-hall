@@ -34,7 +34,7 @@ class Core {
     
     async _start() {
         const mortyPartSecretInfo = api.getFirstPartSecretInfo(this._countBoxes);
-        this._renderMessages(this._morty.name, mortyPartSecretInfo.HMAC, gameConfig.phrases.enterFirstNumber(this._countBoxes));
+        this._renderMessages(this._morty.name, `HMAC${mortyPartSecretInfo.id}=${mortyPartSecretInfo.HMAC}`, gameConfig.phrases.enterFirstNumber(this._countBoxes));
         const rickRandomNumber = await api.getAnswer(gameConfig.userName, gameConfig.patternAnswer.chooseBox);
         const secretInfo = api.getSecondPartSecretInfo(rickRandomNumber, mortyPartSecretInfo, this._countBoxes);
         api.addSecretInfo(secretInfo);
@@ -52,7 +52,8 @@ class Core {
         this._renderMessages(
             this._morty.name, 
             gameConfig.phrases.generateNumber(),
-            mortyPartSecretInfo.HMAC, gameConfig.phrases.enterSecondNumber(this._boxes.filter(box => !box.isSelected).length)
+            `HMAC${mortyPartSecretInfo.id}=${mortyPartSecretInfo.HMAC}`,
+            gameConfig.phrases.enterSecondNumber(this._boxes.filter(box => !box.isSelected).length)
         );
         const rickRandomNumber = await api.getAnswer(gameConfig.userName, gameConfig.patternAnswer.switchBox);
         const secretInfo = api.getSecondPartSecretInfo(rickRandomNumber, mortyPartSecretInfo, this._boxes.filter(box => !box.isSelected).length);
@@ -81,7 +82,7 @@ class Core {
             this._renderMessages(
                 this._morty.name,
                 gameConfig.phrases.randomNumber(index+1, step.mortyRandomNumber),
-                step.HMAC,
+                `KEY${step.id}=${step.secretKey}`,
                 gameConfig.phrases.fairNumber(index+1, step.mortyRandomNumber, step.rickRandomNumber, this._countBoxes - index, step.randomBox)
             );
         })

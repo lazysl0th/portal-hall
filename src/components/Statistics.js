@@ -2,7 +2,7 @@ const Table = require('cli-table3');
 
 class Statistics {
     constructor() {
-        this.rounds = [];
+        this._rounds = [];
         this.currentRound = null;
     }
 
@@ -27,7 +27,7 @@ class Statistics {
                 this.currentRound.switched.win++
             };
         }
-        this.rounds.push(this.currentRound);
+        this._rounds.push(this.currentRound);
         this.currentRound = null;
     }
 
@@ -37,10 +37,10 @@ class Statistics {
             colWidths: [20, 15, 15]
         });
 
-        const roundsStayed = this.rounds.reduce((sum, round) => sum + round.stayed.round, 0)
-        const roundsStayedWin = this.rounds.reduce((sum, round) => sum + round.stayed.win, 0)
-        const roundsSwitched = this.rounds.reduce((sum, round) => sum + round.switched.round, 0)
-        const roundsSwitchedWin = this.rounds.reduce((sum, round) => sum + round.switched.win, 0)
+        const roundsStayed = this._rounds.reduce((sum, round) => sum + round.stayed.round, 0)
+        const roundsStayedWin = this._rounds.reduce((sum, round) => sum + round.stayed.win, 0)
+        const roundsSwitched = this._rounds.reduce((sum, round) => sum + round.switched.round, 0)
+        const roundsSwitchedWin = this._rounds.reduce((sum, round) => sum + round.switched.win, 0)
 
         const pESwitch = roundsSwitched ? (roundsSwitchedWin / roundsSwitched) : 0;
         const pEStay = roundsStayed ? (roundsStayedWin / roundsStayed) : 0;

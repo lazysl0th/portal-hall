@@ -5,7 +5,7 @@ class KeyManager {
     }
 
     generateSecretKey() {
-        return crypto.randomBytes(256);
+        return crypto.randomBytes(32);
     }
 }
 

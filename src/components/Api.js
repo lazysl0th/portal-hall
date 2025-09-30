@@ -18,10 +18,11 @@ class Api {
     }
 
     getFirstPartSecretInfo(countBoxes) {
-        const secretKey = this._getSecretKey();
+        const id = this.getSecretInfoStep().length+1;
+        const secretKey = this._getSecretKey().toString('hex').toUpperCase();
         const mortyRandomNumber = this._getRundomNumber(countBoxes)
         const HMAC = this._generateHMAC(secretKey, mortyRandomNumber).toUpperCase();
-        return { secretKey, mortyRandomNumber, HMAC };
+        return { id, secretKey, mortyRandomNumber, HMAC };
     }
 
     getSecondPartSecretInfo(rickRandomNumber, firstPart, countBoxes) {
@@ -73,7 +74,7 @@ class Api {
     addStartRoundInfo (round) {
         statistics.startRound(round);
     }
-    
+
     addSecretInfo(secretInfo) {
         statistics.addStep(secretInfo);
     }
