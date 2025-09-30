@@ -18,7 +18,7 @@ class Core {
             await this._chooseBox();
             await this._deleteBox();
             await this._changeBox();
-            await this._finish();
+            this._finish();
             await this._end()
 
         }
@@ -75,7 +75,7 @@ class Core {
         api.addSwitchedInfo(switchBox);
     }
 
-    async _finish() {
+    _finish() {
         const resultRound = this._boxes.filter(box => box.hasPortalGun && box.isSelected).length
         const secretInfoStep = api.getSecretInfoStep();
         secretInfoStep.forEach((step, index) => {
